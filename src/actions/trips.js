@@ -30,7 +30,20 @@ export const createTrip = form => async (dispatch) => {
 }
 
 export const applyTrip = (form, id) => async (dispatch) => {
-	await axios.post(`https://us-central1-missao-newton.cloudfunctions.net/futureX/kelson/trips/${id}/apply`, form)
+	console.log("2")
+	try{
+		await axios.post(`https://us-central1-missao-newton.cloudfunctions.net/futureX/kelson/trips/${id}/apply`, form)
+		dispatch({type: "APPLICATION",
+			payload: {"application": true}
+		})
+	}catch(e){
+		console.log("3")
+		dispatch({
+			type: "APPLICATION",
+			payload: {"application": false}
+		})
+	}
+
 }
 
 export const login = (email, password) => async (dispatch) => {

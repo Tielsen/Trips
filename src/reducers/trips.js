@@ -11,6 +11,8 @@ const trips = (state = initialState, action) => {
       return {...state, tripDetails: action.payload.tripDetails}
     case "GET_ID":
       return {...state, id: action.payload.id}
+      case "APPLICATION":
+          return {...state, application: action.payload.application}
     default:
       return state
     }

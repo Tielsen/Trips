@@ -10,7 +10,8 @@ class Aplication extends Component {
     super(props);
 
     this.state = {
-      form: {}
+      form: {},
+      aux: 1
     };
   }
 
@@ -18,17 +19,24 @@ class Aplication extends Component {
     this.props.getTrips()
   }
 
+
   handleInputChange = event => {
     const { name, value } = event.target;
     this.setState({ form: { ...this.state.form, [name]: value } });
   };
 
-  handleOnSubmit = event => {
+  handleOnSubmit = async event => {
     event.preventDefault();
-    this.props.applyTrip(this.state.form, this.state.form.tripId)
+    console.log("1")
+    await this.props.applyTrip(this.state.form, this.state.form.tripId)
+    this.render()
   };
   
   render() {
+    console.log(this.props.application)
+    let returnApplication =
+        this.props.application === true ? <p>Aplicação foi enviada com sucesso</p> :
+            this.props.application === false ? <p>Erro ao enviar aplicação</p>: <p></p>
     return (
       <div>
         <Button onClick={this.props.goHome}>Home</Button>
@@ -109,13 +117,15 @@ class Aplication extends Component {
           
           <button type="submit">Enviar</button>
         </form>
+        {returnApplication}
       </div>
     );
   }
 }
 
 const mapStateToProps = state => ({
-  trips: state.trips.trips
+  trips: state.trips.trips,
+  application: state.trips.application
 })
 
 const mapDispatchToProps = dispatch => ({
